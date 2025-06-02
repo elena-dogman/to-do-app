@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, type StateCreator } from 'zustand';
 import type { Task } from '../types/task';
 
 type TaskStore = {
@@ -9,24 +9,29 @@ type TaskStore = {
   setTasks: (tasks: Task[]) => void;
 };
 
-export const useTaskStore = create<TaskStore>((set) => ({
+const createTaskStore: StateCreator<TaskStore> = (set) => ({
   tasks: [],
-  addTask: (title) =>
+  addTask: (title: string) => {
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      title,
+      completed: false,
+    };
+    set((state) => ({ tasks: [...state.tasks, newTask] }));
+  },
+  toggleTask: (id: string) => {
     set((state) => ({
-      tasks: [
-        ...state.tasks,
-        { id: crypto.randomUUID(), title, completed: false },
-      ],
-    })),
-  toggleTask: (id) =>
-    set((state) => ({
-      tasks: state.tasks.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed } : t,
+      tasks: state.tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task,
       ),
-    })),
-  deleteTask: (id) =>
+    }));
+  },
+  deleteTask: (id: string) => {
     set((state) => ({
-      tasks: state.tasks.filter((t) => t.id !== id),
-    })),
-  setTasks: (tasks) => set({ tasks }),
-}));
+      tasks: state.tasks.filter((task) => task.id !== id),
+    }));
+  },
+  setTasks: (tasks: Task[]) => set({ tasks }),
+});
+
+export const useTaskStore = create<TaskStore>(createTaskStore);
