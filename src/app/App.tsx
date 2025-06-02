@@ -16,10 +16,10 @@ export const App = () => {
   }, [tasks]);
 
   return (
-    <div className='min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4'>
+    <div className='min-h-screen bg-gray-100 text-gray-900 p-4 font-sans'>
       <div className='max-w-xl mx-auto'>
         <h1 className='text-3xl font-bold mb-4 text-center'>📝 To-Do App</h1>
-        <div className='flex justify-center'>
+        <div className='flex justify-center w-96'>
           <div className='mx-auto'>
             <AddTaskForm />
             <TaskList />
