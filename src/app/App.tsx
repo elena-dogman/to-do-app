@@ -19,8 +19,12 @@ export const App = () => {
     <div className='min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4'>
       <div className='max-w-xl mx-auto'>
         <h1 className='text-3xl font-bold mb-4 text-center'>📝 To-Do App</h1>
-        <AddTaskForm />
-        <TaskList />
+        <div className='flex justify-center'>
+          <div className='mx-auto'>
+            <AddTaskForm />
+            <TaskList />
+          </div>
+        </div>
       </div>
     </div>
   );
